@@ -38,34 +38,32 @@ namespace SideScroller {
             this.layoutRoot.Height = layoutRoot.Height;
             Canvas.SetLeft(this.currentBoardLayout.ImageControl, 0);
             Canvas.SetTop(this.currentBoardLayout.ImageControl, 0);
-
-
         }
 
         private void Window_PreviewKeyDown_1(object sender, KeyEventArgs e) {
-            double l, t, m;
+            double l, t, m, screenMoveSpeed = 10;
             switch (e.Key) {
                 case Key.Left:
                     l = Canvas.GetLeft(this.currentBoardLayout.ImageControl);
-                    m = l + 10;
+                    m = l + screenMoveSpeed;
                     if (m > 0) m = 0;
                     Canvas.SetLeft(this.currentBoardLayout.ImageControl, m);
                     break;
                 case Key.Right:
                     l = Canvas.GetLeft(this.currentBoardLayout.ImageControl);
-                    m = l - 10;
+                    m = l - screenMoveSpeed;
                     if (-m > this.currentBoardLayout.BoardWidth) m = -this.currentBoardLayout.BoardWidth;
                     Canvas.SetLeft(this.currentBoardLayout.ImageControl, m);
                     break;
                 case Key.Up:
                     t = Canvas.GetTop(this.currentBoardLayout.ImageControl);
-                    m = t + 10;
+                    m = t + screenMoveSpeed;
                     if (m > 0) m = 0;
                     Canvas.SetTop(this.currentBoardLayout.ImageControl, m);
                     break;
                 case Key.Down:
                     t = Canvas.GetTop(this.currentBoardLayout.ImageControl);
-                    m = t - 10;
+                    m = t - screenMoveSpeed;
                     if (m < -this.currentBoardLayout.BoardHeight) m = -this.currentBoardLayout.BoardHeight;
                     Canvas.SetTop(this.currentBoardLayout.ImageControl, m);
                     break;
