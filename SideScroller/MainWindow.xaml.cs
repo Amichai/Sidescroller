@@ -1,0 +1,75 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace SideScroller {
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window {
+        public MainWindow() {
+            InitializeComponent();
+
+            var boardLayout = new BoardLayout(@"..\..\Assets\background1.jpg") {
+                BoardWidth = 1000,
+                BoardHeight = 500,
+            };
+            this.currentBoardLayout = boardLayout;
+            loadBoardLayout(boardLayout);
+        }
+
+        private BoardLayout currentBoardLayout;
+
+        private void loadBoardLayout(BoardLayout layout) {
+            this.layoutRoot.Children.Add(layout.ImageControl);
+            this.layoutRoot.Width = layoutRoot.Width;
+            this.layoutRoot.Height = layoutRoot.Height;
+            Canvas.SetLeft(this.currentBoardLayout.ImageControl, 0);
+            Canvas.SetTop(this.currentBoardLayout.ImageControl, 0);
+
+
+        }
+
+        private void Window_PreviewKeyDown_1(object sender, KeyEventArgs e) {
+            double l, t;
+            switch (e.Key) {
+                case Key.Left:
+                    l = Canvas.GetLeft(this.currentBoardLayout.ImageControl);
+                    Canvas.SetLeft(this.currentBoardLayout.ImageControl, l += 10);
+                    break;
+                case Key.Right:
+                    l = Canvas.GetLeft(this.currentBoardLayout.ImageControl);
+                    Canvas.SetLeft(this.currentBoardLayout.ImageControl, l -= 10);
+                    break;
+                case Key.Up:
+                    t = Canvas.GetTop(this.currentBoardLayout.ImageControl);
+                    Canvas.SetTop(this.currentBoardLayout.ImageControl, t += 10);
+                    break;
+                case Key.Down:
+                    t = Canvas.GetTop(this.currentBoardLayout.ImageControl);
+                    Canvas.SetTop(this.currentBoardLayout.ImageControl, t -= 10);
+                    break;
+            }
+        }
+    }
+
+    ///Architecture:
+    ///1 - World
+    /// a) Level configuration
+    ///2 - Physics engine
+    /// a) Gravity, collisions
+    ///3 - Character
+    /// a) Graphic, properties
+}
