@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Shapes;
 
 namespace SideScroller {
     /// <summary>
     /// This class encapsulates enemies and platforms etc.
-    /// </summary> 
-    /// 
+    /// </summary>
+    public class BoardElement {
+        public Rectangle Texture { get; set; }
+        public Pos Position { get; set; }
 
-
-
-
-    class BoardElement {
+        internal void Redraw() {
+            Canvas.SetLeft(Texture, Position.X);
+            Canvas.SetTop(Texture, Position.Y);
+        }
     }
 }

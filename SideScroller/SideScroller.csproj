@@ -62,13 +62,16 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="BoardElement.cs" />
+    <Compile Include="BoardElementFactory.cs" />
     <Compile Include="BoardLayout.cs" />
+    <Compile Include="Character.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Pos.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
