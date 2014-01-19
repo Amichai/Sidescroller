@@ -26,11 +26,15 @@ namespace SideScroller {
                 BoardWidth = 1000,
                 BoardHeight = 500,
             };
+            var platform = BoardElementFactory.CreatePlatform(800, 50, Pos.New(100, 600));
+            boardLayout.Elements.Add(platform);
             this.currentBoardLayout = boardLayout;
+            this.mainCharacter = new Character();
             loadBoardLayout(boardLayout);
         }
 
         private BoardLayout currentBoardLayout;
+        private Character mainCharacter;
 
         private void loadBoardLayout(BoardLayout layout) {
             this.layoutRoot.Children.Add(layout.ImageControl);
@@ -39,37 +43,39 @@ namespace SideScroller {
             Canvas.SetLeft(this.currentBoardLayout.ImageControl, 0);
             Canvas.SetTop(this.currentBoardLayout.ImageControl, 0);
 
+            foreach (var e in this.currentBoardLayout.Elements) {
+                this.layoutRoot.Children.Add(e.Texture);
+                e.Redraw();
+            }
 
+            this.layoutRoot.Children.Add(this.mainCharacter.Avatar);
+            centerCharacter();
+        }
+
+        private void centerCharacter() {
+            var left = this.Width / 2;
+            this.mainCharacter.SetPosition(Pos.New(left, 100));
         }
 
         private void Window_PreviewKeyDown_1(object sender, KeyEventArgs e) {
-            double l, t, m;
             switch (e.Key) {
                 case Key.Left:
-                    l = Canvas.GetLeft(this.currentBoardLayout.ImageControl);
-                    m = l + 10;
-                    if (m > 0) m = 0;
-                    Canvas.SetLeft(this.currentBoardLayout.ImageControl, m);
+                    this.currentBoardLayout.Left();
                     break;
                 case Key.Right:
-                    l = Canvas.GetLeft(this.currentBoardLayout.ImageControl);
-                    m = l - 10;
-                    if (-m > this.currentBoardLayout.BoardWidth) m = -this.currentBoardLayout.BoardWidth;
-                    Canvas.SetLeft(this.currentBoardLayout.ImageControl, m);
+                    this.currentBoardLayout.Right();                    
                     break;
                 case Key.Up:
-                    t = Canvas.GetTop(this.currentBoardLayout.ImageControl);
-                    m = t + 10;
-                    if (m > 0) m = 0;
-                    Canvas.SetTop(this.currentBoardLayout.ImageControl, m);
+                    //this.currentBoardLayout.Up();
                     break;
                 case Key.Down:
-                    t = Canvas.GetTop(this.currentBoardLayout.ImageControl);
-                    m = t - 10;
-                    if (m < -this.currentBoardLayout.BoardHeight) m = -this.currentBoardLayout.BoardHeight;
-                    Canvas.SetTop(this.currentBoardLayout.ImageControl, m);
+                    //this.currentBoardLayout.Down();
                     break;
             }
+        }
+
+        private void window_SizeChanged_1(object sender, SizeChangedEventArgs e) {
+            centerCharacter();
         }
     }
 
