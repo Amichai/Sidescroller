@@ -7,7 +7,12 @@ using System.Threading.Tasks;
 namespace SideScroller {
     /// <summary>
     /// This class encapsulates enemies and platforms etc.
-    /// </summary>
+    /// </summary> 
+    /// 
+
+
+
+
     class BoardElement {
     }
 }
