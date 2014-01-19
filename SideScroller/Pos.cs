@@ -12,5 +12,13 @@ namespace SideScroller {
         public static Pos New(double x, double y) {
             return new Pos() { X = x, Y = y };
         }
+
+        public static Pos Zero()
+        {
+            return new Pos() { 
+            X = 0,
+            Y = 0,
+            };
+        }
     }
 }
