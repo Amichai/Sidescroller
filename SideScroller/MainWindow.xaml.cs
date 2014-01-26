@@ -36,8 +36,27 @@ namespace SideScroller {
             collisionDetector.Add(this.mainCharacter);
             collisionDetector.AddRange(boardLayout.Elements);
 
-            if (collisionDetector.CheckForCollision())
-                this.mainCharacter.reset();
+            this.gravityTimer = new Timer(gravityUpdate, null, 0, 40);
+        }
+
+        private void gravityUpdate(object state) {
+            this.mainCharacter.UpdatePosition();
+
+            checkForCollision();
+
+        }
+
+        private void checkForCollision() {
+            try {
+                App.Current.Dispatcher.Invoke((Action)(() => {
+                    if (collisionDetector.CheckForCollision()) {
+                        //this.mainCharacter.reset();
+                        this.reset();
+                    }
+                }));
+            } catch {
+
+            }
         }
 
 
@@ -61,6 +80,8 @@ namespace SideScroller {
             this.layoutRoot.Children.Add(this.mainCharacter.Sprite);
             centerCharacter();
         }
+
+
 
         private void centerCharacter() {
             var left = this.Width / 2;

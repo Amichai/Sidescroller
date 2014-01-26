@@ -20,7 +20,6 @@ namespace SideScroller {
                 Fill = new SolidColorBrush(Colors.Green)
             };
             this.SetPosition(Pos.Zero());
-            this.gravityTimer = new Timer(gravityUpdate, null, 0, 40);
         }
 
         public void SetPosition(Pos pos) {
@@ -33,26 +32,23 @@ namespace SideScroller {
         public double gravityStrength = 0.5, gravityAccel = 0.1;
         public bool accel = false;
 
-        private void gravityUpdate(object state)
-        {
-            App.Current.Dispatcher.Invoke((Action)(() =>
-            {
-                gravityStrength += gravityAccel;
-                if (accel)
-                {
-                    gravityAccel++;
-                    accel = false;
-                }
-                else accel = true;
-                    
-                SetPosition(new Pos()
-                {
-                    X = this.Position.X,
-                    Y = this.Position.Y + gravityStrength,
-                });
+        public void UpdatePosition() {
+            try {
+                App.Current.Dispatcher.Invoke((Action)(() => {
+                    gravityStrength += gravityAccel;
+                    if (accel) {
+                        gravityAccel++;
+                        accel = false;
+                    } else accel = true;
 
+                    SetPosition(new Pos() {
+                        X = this.Position.X,
+                        Y = this.Position.Y + gravityStrength,
+                    });
+                }));
+            } catch (Exception ex) {
 
-            }));
+            }
         }
 
         private void checkforCollision()

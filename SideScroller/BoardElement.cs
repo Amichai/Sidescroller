@@ -14,6 +14,18 @@ namespace SideScroller {
         public Rectangle Sprite { get; set; }
         public Pos Position { get; set; }
 
+        public double Height {
+            get {
+                return this.Sprite.Height;
+            }
+        }
+
+        public double Width {
+            get {
+                return this.Sprite.Width;
+            }
+        }
+
         internal void Redraw() {
             Canvas.SetLeft(Sprite, Position.X);
             Canvas.SetTop(Sprite, Position.Y);

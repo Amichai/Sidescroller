@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,13 +23,16 @@ namespace SideScroller
                     }
                     var e2 = this[j];
 
-                    double e1Bottom = e1.Position.Y + e1.Sprite.Height;
+                    double e1Bottom = e1.Position.Y + e1.Height;
+                    double e1Top = e1.Position.Y;
+                    double e2Bottom = e2.Position.Y + e2.Height;
                     double e2Top = e2.Position.Y;
 
-                    if (e1Bottom > e2Top)
+                    if (e1Bottom > e2Top && e1Bottom < e2Bottom)
                     {
                         return true;
-                    }
+                    } 
+                    
 
                 }
             }
