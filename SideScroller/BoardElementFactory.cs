@@ -15,7 +15,7 @@ namespace SideScroller {
                 Height = height,
                 Fill = new SolidColorBrush(Colors.Red),
             };
-            toReturn.Texture = rect;
+            toReturn.Sprite = rect;
             toReturn.Position = pos;
             return toReturn;
         }

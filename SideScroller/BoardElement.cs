@@ -11,12 +11,12 @@ namespace SideScroller {
     /// This class encapsulates enemies and platforms etc.
     /// </summary>
     public class BoardElement {
-        public Rectangle Texture { get; set; }
+        public Rectangle Sprite { get; set; }
         public Pos Position { get; set; }
 
         internal void Redraw() {
-            Canvas.SetLeft(Texture, Position.X);
-            Canvas.SetTop(Texture, Position.Y);
+            Canvas.SetLeft(Sprite, Position.X);
+            Canvas.SetTop(Sprite, Position.Y);
         }
     }
 }

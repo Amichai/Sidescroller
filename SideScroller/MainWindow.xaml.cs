@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -31,8 +32,17 @@ namespace SideScroller {
             this.currentBoardLayout = boardLayout;
             this.mainCharacter = new Character();
             loadBoardLayout(boardLayout);
+            collisionDetector = new CollisionDetector();
+            collisionDetector.Add(this.mainCharacter);
+            collisionDetector.AddRange(boardLayout.Elements);
+
+            if (collisionDetector.CheckForCollision())
+                this.mainCharacter.reset();
         }
 
+
+        public Timer gravityTimer;
+        private CollisionDetector collisionDetector;
         private BoardLayout currentBoardLayout;
         private Character mainCharacter;
 
@@ -44,11 +54,11 @@ namespace SideScroller {
             Canvas.SetTop(this.currentBoardLayout.ImageControl, 0);
 
             foreach (var e in this.currentBoardLayout.Elements) {
-                this.layoutRoot.Children.Add(e.Texture);
+                this.layoutRoot.Children.Add(e.Sprite);
                 e.Redraw();
             }
 
-            this.layoutRoot.Children.Add(this.mainCharacter.Avatar);
+            this.layoutRoot.Children.Add(this.mainCharacter.Sprite);
             centerCharacter();
         }
 
@@ -72,7 +82,16 @@ namespace SideScroller {
                 case Key.Down:
                     //this.currentBoardLayout.Down();
                     break;
+                case Key.R:
+                    reset();
+                    break;
             }
+        }
+
+        private void reset()
+        {
+            centerCharacter();
+            this.mainCharacter.reset();
         }
 
         private void window_SizeChanged_1(object sender, SizeChangedEventArgs e) {

@@ -11,9 +11,10 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace SideScroller {
-    class Character {
+    class Character : BoardElement
+    {
         public Character() {
-            this.Avatar = new Rectangle() {
+            this.Sprite = new Rectangle() {
                 Width = 20,
                 Height = 80,
                 Fill = new SolidColorBrush(Colors.Green)
@@ -22,23 +23,14 @@ namespace SideScroller {
             this.gravityTimer = new Timer(gravityUpdate, null, 0, 40);
         }
 
-        public Rectangle Avatar { get; set; }
-
-        private Pos position;
-        public Pos Position {
-            get { return position; }
-        }
-       
-
         public void SetPosition(Pos pos) {
-            Canvas.SetLeft(Avatar, pos.X);
-            Canvas.SetTop(Avatar, pos.Y);
-            this.position = pos;
+            Canvas.SetLeft(Sprite, pos.X);
+            Canvas.SetTop(Sprite, pos.Y);
+            this.Position = pos;
         }
 
-        private Timer gravityTimer;
         
-        public int gravityStrength = 1, gravityAccel = 1;
+        public double gravityStrength = 0.5, gravityAccel = 0.1;
         public bool accel = false;
 
         private void gravityUpdate(object state)
@@ -53,12 +45,25 @@ namespace SideScroller {
                 }
                 else accel = true;
                     
-            SetPosition(new Pos()
-            {
-                X = this.Position.X,
-                Y = this.Position.Y + gravityStrength,
-            });
+                SetPosition(new Pos()
+                {
+                    X = this.Position.X,
+                    Y = this.Position.Y + gravityStrength,
+                });
+
+
             }));
+        }
+
+        private void checkforCollision()
+        {
+            double characterBottom = this.Position.Y + this.Sprite.Height;
+        }
+
+        public void reset()
+        {
+            gravityStrength = 0;
+            gravityAccel = 0;
         }
     }
 }
