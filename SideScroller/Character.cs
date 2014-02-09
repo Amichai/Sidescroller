@@ -19,7 +19,6 @@ namespace SideScroller {
                 Height = 80,
                 Fill = new SolidColorBrush(Colors.Green)
             };
-            this.SetPosition(Vec2.Zero());
         }
 
         public void SetPosition(Vec2 pos) {
@@ -79,6 +78,10 @@ namespace SideScroller {
             }
             double dy = vy * timeSinceLastUpdate + .5 * ay * Math.Pow(timeSinceLastUpdate, 2);
 
+            if (this.resting) {
+                dy = 0;
+            }
+
             Vec2 newPosition = new Vec2() {
                 X = this.Position.X,
                 Y = this.Position.Y + dy,
@@ -98,6 +101,19 @@ namespace SideScroller {
 
         internal void Reset() {
             this.Velocity = Vec2.Zero();
+            this.resting = false;
+        }
+
+        private bool resting = false;
+
+        internal void Rest() {
+            this.resting = true;
+        }
+
+        internal void Jump() {
+            this.resting = false;
+            this.Velocity = Vec2.New(0, -.4);
+            
         }
     }
 }

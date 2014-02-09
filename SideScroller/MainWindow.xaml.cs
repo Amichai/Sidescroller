@@ -51,7 +51,8 @@ namespace SideScroller {
                 App.Current.Dispatcher.Invoke((Action)(() => {
                     if (collisionDetector.CheckForCollision()) {
                         //this.mainCharacter.reset();
-                        this.reset();
+                        //this.reset();
+                        this.mainCharacter.Rest();
                     }
                 }));
             } catch {
@@ -81,15 +82,12 @@ namespace SideScroller {
             centerCharacter();
         }
 
-
-
         private void centerCharacter() {
             var left = this.Width / 2;
             this.mainCharacter.SetPosition(Vec2.New(left, 100));
         }
 
         private void Window_PreviewKeyDown_1(object sender, KeyEventArgs e) {
-
             switch (e.Key) {
                 case Key.Left:
                     this.currentBoardLayout.Left();
@@ -98,6 +96,7 @@ namespace SideScroller {
                     this.currentBoardLayout.Right();                    
                     break;
                 case Key.Up:
+                    this.mainCharacter.Jump();
                     //this.currentBoardLayout.Up();
                     break;
                 case Key.Down:
