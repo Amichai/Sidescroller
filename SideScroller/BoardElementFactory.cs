@@ -8,7 +8,7 @@ using System.Windows.Shapes;
 
 namespace SideScroller {
     public static class BoardElementFactory {
-        public static BoardElement CreatePlatform(double width, double height, Pos pos){
+        public static BoardElement CreatePlatform(double width, double height, Vec2 pos){
             var toReturn = new BoardElement();
             var rect = new Rectangle() {
                 Width = width, 

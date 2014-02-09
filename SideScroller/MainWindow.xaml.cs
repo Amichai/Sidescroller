@@ -27,7 +27,7 @@ namespace SideScroller {
                 BoardWidth = 1000,
                 BoardHeight = 500,
             };
-            var platform = BoardElementFactory.CreatePlatform(800, 50, Pos.New(100, 600));
+            var platform = BoardElementFactory.CreatePlatform(800, 50, Vec2.New(100, 600));
             boardLayout.Elements.Add(platform);
             this.currentBoardLayout = boardLayout;
             this.mainCharacter = new Character();
@@ -85,7 +85,7 @@ namespace SideScroller {
 
         private void centerCharacter() {
             var left = this.Width / 2;
-            this.mainCharacter.SetPosition(Pos.New(left, 100));
+            this.mainCharacter.SetPosition(Vec2.New(left, 100));
         }
 
         private void Window_PreviewKeyDown_1(object sender, KeyEventArgs e) {
@@ -109,10 +109,9 @@ namespace SideScroller {
             }
         }
 
-        private void reset()
-        {
+        private void reset() {
             centerCharacter();
-            this.mainCharacter.reset();
+            this.mainCharacter.Reset();
         }
 
         private void window_SizeChanged_1(object sender, SizeChangedEventArgs e) {

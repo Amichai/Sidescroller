@@ -19,34 +19,74 @@ namespace SideScroller {
                 Height = 80,
                 Fill = new SolidColorBrush(Colors.Green)
             };
-            this.SetPosition(Pos.Zero());
+            this.SetPosition(Vec2.Zero());
         }
 
-        public void SetPosition(Pos pos) {
-            Canvas.SetLeft(Sprite, pos.X);
-            Canvas.SetTop(Sprite, pos.Y);
+        public void SetPosition(Vec2 pos) {
+            ///Update the position of the character on screen:
+            App.Current.Dispatcher.BeginInvoke((Action)(() => {
+                Canvas.SetLeft(Sprite, pos.X);
+                Canvas.SetTop(Sprite, pos.Y);
+            }));
+            this.lastPosition = this.Position;
             this.Position = pos;
+
+            if (this.timeSinceLastUpdate == 0) {
+                return;
+            }
+
+            if (this.Position != null && this.lastPosition != null) {
+                ///Calculate the current velocity of our character:
+                ///
+                double vx = (this.Position.X - this.lastPosition.X) / timeSinceLastUpdate;
+                double vy = (this.Position.Y - this.lastPosition.Y) / timeSinceLastUpdate;
+                this.Velocity = Vec2.New(vx, vy);
+            } 
+
+            ///Update position values:
+            this.lastPositionUpdateTime = DateTime.Now;
+            if (this.Velocity != null) {
+                Debug.Print(string.Format("New Position: {0}, dt: {1}, velocity: {2}", pos.ToString(), timeSinceLastUpdate.ToString(), this.Velocity.ToString()));
+            }
         }
 
-        
-        public double gravityStrength = 0.5, gravityAccel = 0.1;
-        public bool accel = false;
+
 
         public void UpdatePosition() {
+                    positionUpdate();
             try {
-                App.Current.Dispatcher.Invoke((Action)(() => {
-                    gravityStrength += gravityAccel;
-                    if (accel) {
-                        gravityAccel++;
-                        accel = false;
-                    } else accel = true;
-
-                    SetPosition(new Pos() {
-                        X = this.Position.X,
-                        Y = this.Position.Y + gravityStrength,
-                    });
-                }));
+                
             } catch (Exception ex) {
+
+            }
+        }
+
+        private Vec2 lastPosition;
+        private DateTime lastPositionUpdateTime;
+        private double timeSinceLastUpdate {
+            get {
+                return (DateTime.Now - this.lastPositionUpdateTime).TotalMilliseconds;
+            }
+        }
+
+        private const double ay = .001;
+
+        private void positionUpdate() {
+            ///y = y0 + vy * dt + .5 * ay * dt^2
+            double vy = 0;
+            if (this.Velocity != null) {
+                vy = this.Velocity.Y;
+            }
+            double dy = vy * timeSinceLastUpdate + .5 * ay * Math.Pow(timeSinceLastUpdate, 2);
+
+            Vec2 newPosition = new Vec2() {
+                X = this.Position.X,
+                Y = this.Position.Y + dy,
+            };
+
+            try {
+                SetPosition(newPosition);
+            } catch {
 
             }
         }
@@ -56,10 +96,8 @@ namespace SideScroller {
             double characterBottom = this.Position.Y + this.Sprite.Height;
         }
 
-        public void reset()
-        {
-            gravityStrength = 0;
-            gravityAccel = 0;
+        internal void Reset() {
+            this.Velocity = Vec2.Zero();
         }
     }
 }

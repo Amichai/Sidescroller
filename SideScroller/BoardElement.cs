@@ -12,7 +12,9 @@ namespace SideScroller {
     /// </summary>
     public class BoardElement {
         public Rectangle Sprite { get; set; }
-        public Pos Position { get; set; }
+        public Vec2 Position { get; set; }
+
+        public Vec2 Velocity { get; set; }
 
         public double Height {
             get {
