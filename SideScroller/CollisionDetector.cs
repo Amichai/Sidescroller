@@ -17,6 +17,9 @@ namespace SideScroller
 
                 for (int j = 0; j < this.Count; j++)
                 {
+                    bool yCollision = false;
+                    bool xCollision = false;
+
                     if (i == j)
                     {
                         continue;
@@ -28,12 +31,28 @@ namespace SideScroller
                     double e2Bottom = e2.Position.Y + e2.Height;
                     double e2Top = e2.Position.Y;
 
+                    double e1Right = e1.Position.X + e1.Width;
+                    double e1Left = e1.Position.X;
+                    double e2Right = e2.Position.X + e2.Width;
+                    double e2Left = e2.Position.X;
+
                     if (e1Bottom > e2Top && e1Bottom < e2Bottom)
                     {
-                        return true;
-                    } 
-                    
+                        yCollision = true;
+                    }
 
+                    if (e2Right > e1Left && e2Right < e1Right)
+                    {
+
+                        xCollision = true;
+                    }
+
+                    if (yCollision && xCollision)
+                    {
+                        return false;
+                    }
+                    Debug.Print(string.Format("Y Collision: {0}, X Collision: {1}, e1Right: {2}, e1Left: {3}, e2Right: {4}, e2Left: {5}"
+                        , yCollision, xCollision, e1Right, e1Left, e2Right, e2Left));
                 }
             }
             return false;

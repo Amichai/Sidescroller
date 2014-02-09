@@ -52,19 +52,22 @@ namespace SideScroller {
 
         public void Right() {
             double l, m;
-            l = Canvas.GetLeft(this.ImageControl);
-            m = l - stepSize;
-            if (-m > this.BoardWidth) {
-                m = -this.BoardWidth;
+            App.Current.Dispatcher.BeginInvoke((Action)(() =>
+            {
+                l = Canvas.GetLeft(this.ImageControl);
+                m = l - stepSize;
+                if (-m > this.BoardWidth)
+                {
+                    m = -this.BoardWidth;
+                    Canvas.SetLeft(this.ImageControl, m);
+                    return;
+                }
                 Canvas.SetLeft(this.ImageControl, m);
-                return;
-            }
-            Canvas.SetLeft(this.ImageControl, m);
-
             foreach (var e in Elements) {
                 e.Position.X -= stepSize;
                 e.Redraw();
             }
+            }));
         }
 
         public void Up() {
@@ -85,6 +88,12 @@ namespace SideScroller {
             m = t - stepSize;
             if (m < -this.BoardHeight) m = -this.BoardHeight;
             Canvas.SetTop(this.ImageControl, m);
+        }
+
+        public void Reset()
+        {
+            Canvas.SetTop(this.ImageControl, 0);
+            Canvas.SetLeft(this.ImageControl, 0);
         }
     }
 }

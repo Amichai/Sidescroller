@@ -36,14 +36,14 @@ namespace SideScroller {
             collisionDetector.Add(this.mainCharacter);
             collisionDetector.AddRange(boardLayout.Elements);
 
-            this.gravityTimer = new Timer(gravityUpdate, null, 0, 40);
+            this.gravityTimer = new Timer(gameTimeUpdate, null, 0, 40);
         }
 
-        private void gravityUpdate(object state) {
+        private void gameTimeUpdate(object state) {
             this.mainCharacter.UpdatePosition();
-
             checkForCollision();
 
+            this.currentBoardLayout.Right();
         }
 
         private void checkForCollision() {
@@ -84,7 +84,7 @@ namespace SideScroller {
 
         private void centerCharacter() {
             var left = this.Width / 2;
-            this.mainCharacter.SetPosition(Vec2.New(left, 100));
+            this.mainCharacter.SetPosition(Vec2.New(left, 150));
         }
 
         private void Window_PreviewKeyDown_1(object sender, KeyEventArgs e) {
@@ -111,6 +111,7 @@ namespace SideScroller {
         private void reset() {
             centerCharacter();
             this.mainCharacter.Reset();
+            this.currentBoardLayout.Reset();
         }
 
         private void window_SizeChanged_1(object sender, SizeChangedEventArgs e) {
