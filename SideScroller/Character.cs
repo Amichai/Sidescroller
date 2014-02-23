@@ -12,8 +12,8 @@ using System.Windows.Threading;
 
 namespace SideScroller {
     class Character : BoardElement
-    {
-        public Character() {
+    {///new Character()
+        public Character(Vec2 initialPosition) : base(initialPosition){
             this.Sprite = new Rectangle() {
                 Width = 20,
                 Height = 80,
@@ -45,7 +45,7 @@ namespace SideScroller {
             ///Update position values:
             this.lastPositionUpdateTime = DateTime.Now;
             if (this.Velocity != null) {
-                Debug.Print(string.Format("New Position: {0}, dt: {1}, velocity: {2}", pos.ToString(), timeSinceLastUpdate.ToString(), this.Velocity.ToString()));
+                //Debug.Print(string.Format("New Position: {0}, dt: {1}, velocity: {2}", pos.ToString(), timeSinceLastUpdate.ToString(), this.Velocity.ToString()));
             }
         }
 
@@ -99,11 +99,14 @@ namespace SideScroller {
             double characterBottom = this.Position.Y + this.Sprite.Height;
         }
 
-        internal void Reset() {
-            this.Velocity = Vec2.Zero();
+        public override void ResetPosition() {
+            base.ResetPosition();
             this.resting = false;
         }
 
+        /// <summary>
+        /// This variable is used to indicate if our character is "walking" on a platform
+        /// </summary>
         private bool resting = false;
 
         internal void Rest() {

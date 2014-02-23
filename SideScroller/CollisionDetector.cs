@@ -51,8 +51,8 @@ namespace SideScroller
                     {
                         return false;
                     }
-                    Debug.Print(string.Format("Y Collision: {0}, X Collision: {1}, e1Right: {2}, e1Left: {3}, e2Right: {4}, e2Left: {5}"
-                        , yCollision, xCollision, e1Right, e1Left, e2Right, e2Left));
+                    //Debug.Print(string.Format("Y Collision: {0}, X Collision: {1}, e1Right: {2}, e1Left: {3}, e2Right: {4}, e2Left: {5}"
+                    //    , yCollision, xCollision, e1Right, e1Left, e2Right, e2Left));
                 }
             }
             return false;

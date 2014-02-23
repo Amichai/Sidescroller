@@ -9,14 +9,13 @@ using System.Windows.Shapes;
 namespace SideScroller {
     public static class BoardElementFactory {
         public static BoardElement CreatePlatform(double width, double height, Vec2 pos){
-            var toReturn = new BoardElement();
+            var toReturn = new BoardElement(pos);
             var rect = new Rectangle() {
                 Width = width, 
                 Height = height,
                 Fill = new SolidColorBrush(Colors.Red),
             };
             toReturn.Sprite = rect;
-            toReturn.Position = pos;
             return toReturn;
         }
     }

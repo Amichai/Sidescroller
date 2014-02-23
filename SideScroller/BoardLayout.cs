@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,7 +49,7 @@ namespace SideScroller {
             }
         }
 
-        private double stepSize = 10;
+        private double stepSize = 2;
 
         public void Right() {
             double l, m;
@@ -92,6 +93,15 @@ namespace SideScroller {
 
         public void Reset()
         {
+            resetTheBackground();
+            Debug.Print("Board element count: " + this.Elements.Count);
+            foreach (var e in this.Elements) {
+                e.ResetPosition();
+
+            }
+        }
+
+        private void resetTheBackground() {
             Canvas.SetTop(this.ImageControl, 0);
             Canvas.SetLeft(this.ImageControl, 0);
         }

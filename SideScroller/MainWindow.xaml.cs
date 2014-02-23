@@ -30,7 +30,8 @@ namespace SideScroller {
             var platform = BoardElementFactory.CreatePlatform(800, 50, Vec2.New(100, 600));
             boardLayout.Elements.Add(platform);
             this.currentBoardLayout = boardLayout;
-            this.mainCharacter = new Character();
+            var left = this.Width / 2;
+            this.mainCharacter = new Character(Vec2.New(left, 150));
             loadBoardLayout(boardLayout);
             collisionDetector = new CollisionDetector();
             collisionDetector.Add(this.mainCharacter);
@@ -43,7 +44,11 @@ namespace SideScroller {
             this.mainCharacter.UpdatePosition();
             checkForCollision();
 
-            this.currentBoardLayout.Right();
+            try {
+                this.currentBoardLayout.Right();
+            } catch (Exception ex) {
+                Debug.Print(ex.Message);
+            }
         }
 
         private void checkForCollision() {
@@ -60,7 +65,6 @@ namespace SideScroller {
             }
         }
 
-
         public Timer gravityTimer;
         private CollisionDetector collisionDetector;
         private BoardLayout currentBoardLayout;
@@ -70,6 +74,7 @@ namespace SideScroller {
             this.layoutRoot.Children.Add(layout.ImageControl);
             this.layoutRoot.Width = layoutRoot.Width;
             this.layoutRoot.Height = layoutRoot.Height;
+            ///Sets the background image
             Canvas.SetLeft(this.currentBoardLayout.ImageControl, 0);
             Canvas.SetTop(this.currentBoardLayout.ImageControl, 0);
 
@@ -79,12 +84,7 @@ namespace SideScroller {
             }
 
             this.layoutRoot.Children.Add(this.mainCharacter.Sprite);
-            centerCharacter();
-        }
-
-        private void centerCharacter() {
-            var left = this.Width / 2;
-            this.mainCharacter.SetPosition(Vec2.New(left, 150));
+            this.mainCharacter.ResetPosition();
         }
 
         private void Window_PreviewKeyDown_1(object sender, KeyEventArgs e) {
@@ -93,7 +93,7 @@ namespace SideScroller {
                     this.currentBoardLayout.Left();
                     break;
                 case Key.Right:
-                    this.currentBoardLayout.Right();                    
+                    this.currentBoardLayout.Right();
                     break;
                 case Key.Up:
                     this.mainCharacter.Jump();
@@ -109,13 +109,12 @@ namespace SideScroller {
         }
 
         private void reset() {
-            centerCharacter();
-            this.mainCharacter.Reset();
+            this.mainCharacter.ResetPosition();
             this.currentBoardLayout.Reset();
         }
 
         private void window_SizeChanged_1(object sender, SizeChangedEventArgs e) {
-            centerCharacter();
+            this.mainCharacter.ResetPosition();
         }
     }
 

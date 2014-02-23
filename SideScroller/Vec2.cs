@@ -13,6 +13,10 @@ namespace SideScroller {
             return new Vec2() { X = x, Y = y };
         }
 
+        public Vec2 Clone() {
+            return new Vec2() { X = X, Y = Y };
+        }
+
         public static Vec2 Zero()
         {
             return new Vec2() { 
