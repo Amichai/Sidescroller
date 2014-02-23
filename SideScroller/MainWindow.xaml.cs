@@ -57,6 +57,8 @@ namespace SideScroller {
                     double restingPlane;
                     if (collisionDetector.CheckForCollision(out restingPlane)) {
                         this.mainCharacter.Rest(restingPlane);
+                    } else {
+                        this.mainCharacter.NotResting();
                     }
                 }));
             } catch {

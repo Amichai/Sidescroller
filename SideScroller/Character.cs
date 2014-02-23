@@ -120,5 +120,9 @@ namespace SideScroller {
             this.Velocity = Vec2.New(0, -.4);
             
         }
+
+        internal void NotResting() {
+            this.resting = false;
+        }
     }
 }
