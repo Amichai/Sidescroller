@@ -54,10 +54,9 @@ namespace SideScroller {
         private void checkForCollision() {
             try {
                 App.Current.Dispatcher.Invoke((Action)(() => {
-                    if (collisionDetector.CheckForCollision()) {
-                        //this.mainCharacter.reset();
-                        //this.reset();
-                        this.mainCharacter.Rest();
+                    double restingPlane;
+                    if (collisionDetector.CheckForCollision(out restingPlane)) {
+                        this.mainCharacter.Rest(restingPlane);
                     }
                 }));
             } catch {

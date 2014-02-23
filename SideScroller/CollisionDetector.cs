@@ -9,8 +9,9 @@ namespace SideScroller
 {   
     class CollisionDetector : List<BoardElement>
     {
-        public bool CheckForCollision()
+        public bool CheckForCollision(out double restingPlane)
         {
+            restingPlane = 0;
             for (int i = 0; i< this.Count; i++)
             {
                 var e1 = this[i];
@@ -40,19 +41,16 @@ namespace SideScroller
                     {
                         yCollision = true;
                     }
-
-                    if (e2Right > e1Left && e2Right < e1Right)
-                    {
-
-                        xCollision = true;
+                    xCollision = true;
+                    restingPlane = e2Top;
+                    if (e1Left > e2Right || e1Right < e2Left) {
+                        xCollision = false;
                     }
 
                     if (yCollision && xCollision)
                     {
-                        return false;
+                        return true;
                     }
-                    //Debug.Print(string.Format("Y Collision: {0}, X Collision: {1}, e1Right: {2}, e1Left: {3}, e2Right: {4}, e2Left: {5}"
-                    //    , yCollision, xCollision, e1Right, e1Left, e2Right, e2Left));
                 }
             }
             return false;

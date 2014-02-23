@@ -109,8 +109,10 @@ namespace SideScroller {
         /// </summary>
         private bool resting = false;
 
-        internal void Rest() {
+        /// <param name="restingPlane">This is the height of the platform that our character is walking on.</param>
+        internal void Rest(double restingPlane) {
             this.resting = true;
+            this.SetPosition(Vec2.New(this.Position.X, restingPlane - this.Height));
         }
 
         internal void Jump() {

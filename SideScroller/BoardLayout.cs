@@ -94,7 +94,6 @@ namespace SideScroller {
         public void Reset()
         {
             resetTheBackground();
-            Debug.Print("Board element count: " + this.Elements.Count);
             foreach (var e in this.Elements) {
                 e.ResetPosition();
 
