@@ -113,7 +113,6 @@ namespace SideScroller {
         internal void Jump() {
             this.resting = false;
             this.Velocity = Vec2.New(0, -.4);
-            
         }
     }
 }

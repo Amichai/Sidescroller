@@ -36,12 +36,12 @@ namespace SideScroller {
             collisionDetector.Add(this.mainCharacter);
             collisionDetector.AddRange(boardLayout.Elements);
 
-            this.gravityTimer = new Timer(gravityUpdate, null, 0, 40);
+            this.gravityTimer = new Timer(gameTimeUpdate, null, 0, 40);
         }
 
-        private void gravityUpdate(object state) {
+        private void gameTimeUpdate(object state) {
             this.mainCharacter.UpdatePosition();
-
+            this.currentBoardLayout.Right();
             checkForCollision();
 
         }
